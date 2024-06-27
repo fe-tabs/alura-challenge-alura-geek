@@ -1,9 +1,41 @@
+import { api } from "./api.js";
+
 const productsContainer = document.querySelector('.products__container');
 const form = document.querySelector('.form');
 
+function createProductCell({ id, name, price, image }) {
+  const productCell = document.createElement('td');
+  productCell.classList.add("product");
+  productCell.innerHTML += `
+    <img class="product__image" src=${image} alt=${name}/>
+    <p class="product__name">${name}</p>
+    </div>
+  `;
+
+  const productFooter = document.createElement('div');
+  productFooter.classList.add("product__footer");
+  productFooter.innerHTML += `
+    <span class="product__price">
+      R$ ${Number(price).toFixed(2)}
+    </span>
+  `;
+
+  const productTrash = document.createElement('img');
+  productTrash.classList.add("product__trash");
+  productTrash.src = "images/trashcan.svg";
+  productTrash.alt = "Remover";
+  productTrash.addEventListener("click", async() => {
+    await api.removeProduct(id)}
+  );
+
+  productFooter.appendChild(productTrash);
+  productCell.appendChild(productFooter);
+
+  return productCell;
+}
+
 async function loadProducts() {
-  let products = await fetch("http://localhost:3000/products")
-    .then(res => res.json());
+  const products = await api.listProducts();
 
   for (let i = 0; i < products.length; i++) {
     let product = products[i];
@@ -17,25 +49,7 @@ async function loadProducts() {
     const rows = document.querySelectorAll('tr');
     const lastRow = rows[rows.length - 1];
 
-    lastRow.innerHTML += `
-      <td class="product">
-        <img class="product__image" src=${product.image} alt=${product.name}/>
-        <p class="product__name">${product.name}</p>
-        <div class="product__footer">
-          <span class="product__price">
-            R$ ${Number(product.price).toFixed(2)}
-          </span>
-          <img 
-            class="product__trash" 
-            src="images/trashcan.svg" 
-            alt="Remover"
-            onclick="fetch('http://localhost:3000/products/${product.id}', {
-              method: 'DELETE',
-            })"
-          />
-        </div>
-      </td>
-    `;  
+    lastRow.appendChild(createProductCell(product));
   }
 }
 
@@ -44,17 +58,7 @@ async function addProduct() {
   const price = document.getElementById('price').value;
   const image = document.getElementById('image').value;
 
-  await fetch("http://localhost:3000/products", {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify({
-      "name": name,
-      "price": price,
-      "image": image
-    })
-  }).then(res => res.json())
+  await api.addProduct({ name, price, image });
 }
 
 form.addEventListener("submit", () => addProduct());
