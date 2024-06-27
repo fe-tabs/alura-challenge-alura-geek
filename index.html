@@ -8,15 +8,82 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+
   <link rel='stylesheet' type='text/css' media='screen' href='reset.css'>
   <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
   
   <title>Alura Geek</title>
 </head>
 
-<body>  
+<body>
+  <div>
+    <header class="header">
+      <div class="logo">
+        <img class="logo__image" src="images/hearts.svg" alt="Corações"/>
+        <h1 class="logo__title">Alura Geek</h1>
+      </div>
+    </header>
+  
+    <main class="main">
+      <section class="main__section products__section">
+        <h2 class="main__section__title">MEUS PRODUTOS</h2>
+      
+        <table class="products">
+          <tbody class="products__container">
+
+          </tbody>
+        </table>
+      </section>
+  
+      <section class="main__section form__section">
+        <h2 class="main__section__title">ADICIONAR PRODUTO</h2>
+      
+        <form class="form">
+          <input
+            class="form__input"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Nome..."
+          />
+  
+          <input
+            class="form__input"
+            type="number"
+            id="price"
+            name="price"
+            step=".05"
+            placeholder="Preço..."
+          />
+          
+          <input
+            class="form__input"
+            type="text"
+            id="image"
+            name="image"
+            placeholder="Imagem..."
+          />
+  
+          <div class="form__button__container">
+            <input class="form__button form__button__submit" type="submit" value="Salvar"/>
+            <input class="form__button form__button__reset" type="reset" value="Limpar"/>
+          </d>
+        </form>
+      </section>
+    </main>
+  </div>
+  
+  <footer class="footer">
+    <div class="logo">
+      <img class="logo__image" src="images/hearts.svg" alt="Corações"/>
+      <h2 class="logo__title">Alura Geek</h2>
+    </div>
+    <p class="footer__text">DESENVOLVIDO POR FÊ TABS</p>
+    <span class="footer__span">ALURA LATAM - 2024</span>
+  </footer>
+
+  <script type="module" src="main.js"></script>
 </body>
 
 </html>
