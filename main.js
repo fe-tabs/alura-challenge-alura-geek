@@ -1,9 +1,9 @@
 const productsContainer = document.querySelector('.products__container');
+const form = document.querySelector('.form');
 
 async function loadProducts() {
-  let products = 
-    await fetch("http://localhost:3000/products")
-      .then(res => res.json());
+  let products = await fetch("http://localhost:3000/products")
+    .then(res => res.json());
 
   for (let i = 0; i < products.length; i++) {
     let product = products[i];
@@ -23,7 +23,7 @@ async function loadProducts() {
         <p class="product__name">${product.name}</p>
         <div class="product__footer">
           <span class="product__price">
-            R$ ${product.price.toFixed(2)}
+            R$ ${Number(product.price).toFixed(2)}
           </span>
           <img class="product__trash" src="images/trashcan.svg" alt="Remover"/>
         </div>
@@ -31,5 +31,25 @@ async function loadProducts() {
     `;  
   }
 }
+
+async function addProduct() {
+  const name = document.getElementById('name').value;
+  const price = document.getElementById('price').value;
+  const image = document.getElementById('image').value;
+
+  await fetch("http://localhost:3000/products", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify({
+      "name": name,
+      "price": price,
+      "image": image
+    })
+  }).then(res => res.json())
+}
+
+form.addEventListener("submit", () => addProduct());
 
 loadProducts();
