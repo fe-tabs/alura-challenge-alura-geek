@@ -25,7 +25,14 @@ async function loadProducts() {
           <span class="product__price">
             R$ ${Number(product.price).toFixed(2)}
           </span>
-          <img class="product__trash" src="images/trashcan.svg" alt="Remover"/>
+          <img 
+            class="product__trash" 
+            src="images/trashcan.svg" 
+            alt="Remover"
+            onclick="fetch('http://localhost:3000/products/${product.id}', {
+              method: 'DELETE',
+            })"
+          />
         </div>
       </td>
     `;  
